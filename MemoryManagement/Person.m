@@ -17,23 +17,34 @@
     self = [super init];
     if (self) {
         NSLog(@"-[Person init]: %@", _car);
-        // TODO: Implement initWithCar with MRC
-        _car = car;
+        _car = [car retain];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    // TODO: Implement dealloc with MRC (order is important)
-
     NSLog(@"-[Person dealloc]: %@", _car);
+    [_car release];
+    [super dealloc];
 }
 
-// TODO: Implement setCar with MRC
 - (void)setCar:(Car *)car
 {
+//    No Good!
+//    [_car release];
+//    _car = [car retain];
+    
+    // Great!
+    [car retain];
+    [_car release];
     _car = car;
+    
+    // Another great alternative:
+    if (_car != car) {
+        [_car release];
+        _car = [car retain];
+    }
 }
 
 @end

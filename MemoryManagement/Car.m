@@ -11,6 +11,17 @@
 
 @implementation Car
 
++ (instancetype)car
+{
+    return [self carWithMake:nil];
+}
+
++ (instancetype)carWithMake:(NSString *)make
+{
+    Car *car = [[self alloc] initWithMake:make];
+    return [car autorelease];
+}
+
 - (instancetype)initWithMake:(NSString *)make
 {
     self = [super init];
@@ -21,20 +32,17 @@
     return self;
 }
 
-// TODO: Implement autoreleased class car method
-
-
 - (void)dealloc
 {
     NSLog(@"-[Car dealloc]: %@", self);
-    // TODO: Implement dealloc with MRC
+    [_make release];
+    [super dealloc];
 }
 
 - (NSString *)description
 {
-    // TODO: Implement a standard autoreleasing method.
     NSString *description = [[NSString alloc] initWithFormat:@"Car: %@", self.make];
-    return description;
+    return [description autorelease];
 }
 
 @end
